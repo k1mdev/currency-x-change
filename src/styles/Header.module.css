@@ -1,0 +1,18 @@
+.header {
+    margin-top: 30px;
+}
+
+.header * {
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+}
+
+.largeX {
+    font-size: 100px;
+    color: red;
+    margin-top: -30px;
+    margin-bottom: -30px;
+}
+
