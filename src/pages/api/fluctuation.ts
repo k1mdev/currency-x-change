@@ -1,26 +1,7 @@
+import { APIErrorResponse, APIFluctuationResponse } from "@/responses"
 import { NextApiRequest, NextApiResponse } from "next"
 
-type FluctuationResponse = {
-  success: true
-  fluctuation: true
-  start_date: string
-  end_date: string
-  base: string
-  rates: {
-    [key: string]: {
-      start_rate: number
-      end_date: number
-      change: number
-      change_pct: number
-    }
-  }
-} | {
-  success: false,
-  error: {
-    info: string,
-    code: number | string
-  }
-}
+type FluctuationResponse = APIErrorResponse | APIFluctuationResponse
 
 export default async function handler(
   req: NextApiRequest,

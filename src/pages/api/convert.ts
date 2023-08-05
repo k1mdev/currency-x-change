@@ -1,28 +1,8 @@
 
+import { APIConversionResponse, APIErrorResponse } from '@/responses'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type ConversionResponse = {
-  success: false,
-  error: {
-    info: string,
-    code: number | string
-  }
-} | {
-  success: true,
-  query: {
-    from: string,
-    to: string
-    amount: number
-  }
-  info: {
-    timestamp: number
-    rate: number
-  }
-  historical: string
-  date: string
-  result: number
-}
-
+type ConversionResponse = APIErrorResponse | APIConversionResponse
 
 export default async function handler(
   req: NextApiRequest,

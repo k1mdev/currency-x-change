@@ -1,24 +1,7 @@
+import { APIErrorResponse, APITimeseriesResponse } from "@/responses"
 import { NextApiRequest, NextApiResponse } from "next"
 
-type TimeseriesResponse = {
-  success: true
-  timeseries: true
-  start_date: string
-  end_date: string
-  base: string
-  rates: {
-    [key: string]: {
-      [key: string]: string
-    }
-  }
-} | {
-  success: false,
-  error: {
-    info: string,
-    code: number | string
-  }
-}
-
+type TimeseriesResponse = APIErrorResponse | APITimeseriesResponse
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<TimeseriesResponse>

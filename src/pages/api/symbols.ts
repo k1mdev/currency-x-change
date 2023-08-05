@@ -1,18 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { APIErrorResponse, APISymbolsResponse } from '@/responses'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type SymbolsResponse = {
-  success: true,
-  symbols: {
-    [key: string]: string
-  }
-} | {
-  success: false,
-  error: {
-    info: string,
-    code: number | string
-  }
-}
+type SymbolsResponse = APIErrorResponse | APISymbolsResponse
 
 export default async function handler(
   req: NextApiRequest,
