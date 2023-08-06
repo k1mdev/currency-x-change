@@ -36,16 +36,24 @@ export default function Home() {
 
 
   const [curA, setCurA] = useState<string>();
+  const [curB, setCurB] = useState<string>();
+
 
   const handleCurAChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurA(e.target.value);
     console.log((curA));
   }
 
+  const handleCurBChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurB(e.target.value);
+    console.log((curB));
+  }
+
 
   return (
     <>
       <Dropdown currencies={currencies} onChange={handleCurAChange}/>
+      <Dropdown currencies={currencies} onChange={handleCurBChange}/>
     </>
   )
 }
