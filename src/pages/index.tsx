@@ -8,14 +8,13 @@ import Dropdown from '@/components/Dropdown'
 
 const inter = Inter({ subsets: ['latin'] })
 
-type CurrencySymbols = {
-  [key: string]: string
-}
+type FetchedSymbols = {
+  [key: string]: string;
+};
 
 export default function Home() {
+  const [symbols, setSymbols] = useState<FetchedSymbols | null>(null);
 
-  const [symbols, setSymbols] = useState<CurrencySymbols>();
-  
   useEffect(() => {
     fetch('/api/symbols')
       .then((response) => {
@@ -34,7 +33,7 @@ export default function Home() {
 
   return (
     <>
-      <Dropdown />
+      {symbols ? <Dropdown symbols={symbols} /> : <p>Loading...</p>}
     </>
-  )
+  );
 }
