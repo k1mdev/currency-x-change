@@ -67,3 +67,15 @@ export type APILatestResponse = {
     [key: string]: number
   }
 }
+
+export type APIHistoricalResponse = {
+  success: true
+  historical: true
+  date: string
+  timestamp: number
+  base: string
+  rates: {
+    [key: string]: number
+  }
+
+}
