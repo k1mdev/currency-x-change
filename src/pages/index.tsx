@@ -10,11 +10,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 type FetchedSymbols = {
   [key: string]: string;
-};
+}
 
 export default function Home() {
-  const [symbols, setSymbols] = useState<FetchedSymbols | null>(null);
 
+  const [symbols, setSymbols] = useState<FetchedSymbols>();
+  
   useEffect(() => {
     fetch('/api/symbols')
       .then((response) => {
@@ -33,7 +34,7 @@ export default function Home() {
 
   return (
     <>
-      {symbols ? <Dropdown symbols={symbols} /> : <p>Loading...</p>}
+      <Dropdown />
     </>
-  );
+  )
 }
