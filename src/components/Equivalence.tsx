@@ -2,14 +2,7 @@ import React from "react";
 import styles from "../styles/Equivalence.module.css"
 
 
-interface EquivalenceProps {
-    currencyA: "USD",
-    currencyCnvtd: 1.05,
-    currencyB: "GBP"
-}
-
-
-const Equivalence: React.FC = () => {
+const Equivalence: React.FC= () => {
 
     const props = {
         currencyA: "USD",
