@@ -2,20 +2,17 @@ import React from "react";
 import styles from '../styles/Dropdown.module.css';
 
 interface DropdownProps {
-  symbols: {
-    [key: string]: string;
-    //[key: string]: number;
-  };
+  currencies: string[];
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown: React.FC = () => {
+const Dropdown: React.FC<DropdownProps> = ({currencies, onChange}) => {
 
-  let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"]; 
 
   return (
     <>
     <label htmlFor="curSelect">Choose a currency:</label>
-      <select id="curSelect">
+      <select id="curSelect" onChange={onChange}>
       {currencies.map((cur) => (
         <option key={cur}>
           {cur}

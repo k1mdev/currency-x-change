@@ -14,6 +14,8 @@ type FetchedSymbols = {
 
 export default function Home() {
 
+  let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
+
   const [symbols, setSymbols] = useState<FetchedSymbols>();
   
   useEffect(() => {
@@ -32,9 +34,18 @@ export default function Home() {
       });
   }, []);
 
+
+  const [curA, setCurA] = useState<string>();
+
+  const handleCurAChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurA(e.target.value);
+    console.log((curA));
+  }
+
+
   return (
     <>
-      <Dropdown />
+      <Dropdown currencies={currencies} onChange={handleCurAChange}/>
     </>
   )
 }
