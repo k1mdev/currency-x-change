@@ -2,7 +2,12 @@ import React from "react";
 import styles from "../styles/Equivalence.module.css"
 
 
-const Equivalence: React.FC= () => {
+interface EquivalenceProps {
+    curA: string | undefined;
+    curB: string | undefined;
+  }
+
+const Equivalence: React.FC<EquivalenceProps>= ({curA, curB}) => {
 
     const props = {
         currencyA: "USD",
@@ -12,7 +17,7 @@ const Equivalence: React.FC= () => {
 
     return (
         <div className={styles.statement}>
-            <h1>1 {props.currencyA} = {props.currencyCnvtd} {props.currencyB}</h1>
+            <h1>1 {curA} = {props.currencyCnvtd} {curB}</h1>
         </div>
     )
 }

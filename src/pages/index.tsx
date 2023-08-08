@@ -5,6 +5,7 @@ import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import { error } from 'console'
 import Dropdown from '@/components/Dropdown'
+import Equivalence from '@/components/Equivalence'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,8 +14,6 @@ type FetchedSymbols = {
 }
 
 export default function Home() {
-
-  let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
 
   const [symbols, setSymbols] = useState<FetchedSymbols>();
   
@@ -35,25 +34,42 @@ export default function Home() {
   }, []);
 
 
-  const [curA, setCurA] = useState<string>();
-  const [curB, setCurB] = useState<string>();
+  let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
+
+  const [curA, setCurA] = useState<string>(`${currencies[0]}`);
+  const [curB, setCurB] = useState<string>(`${currencies[0]}`);
+
+  const [amntA, setAmntA] = useState<number>(0);
+  const [amntB, setAmntB] = useState<number>(0);
 
 
-  const handleCurAChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurA(e.target.value);
-    console.log((curA));
+  const handleCurAChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value, tagName } = e.target;
+    tagName === "SELECT" ? setCurA(value) : setAmntA(parseFloat(value));
   }
 
   const handleCurBChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurB(e.target.value);
-    console.log((curB));
+    const { name, value, tagName } = e.target;
+    tagName === "SELECT" ? setCurB(value) : setAmntB(parseFloat(value));
   }
+
+
+  useEffect(() => {
+    console.log("curA:", curA);
+    console.log("AmountA:", amntA);
+  }, [curA, amntA]);
+
+  useEffect(() => {
+    console.log("curB:", curB);
+    console.log("AmountB:", amntB);
+  }, [curB, amntB]);
 
 
   return (
     <>
-      <Dropdown currencies={currencies} onChange={handleCurAChange}/>
-      <Dropdown currencies={currencies} onChange={handleCurBChange}/>
+      <Equivalence curA={curA} curB={curB} />
+      <Dropdown currencies={currencies} onChange={handleCurAChange} />
+      <Dropdown currencies={currencies} onChange={handleCurBChange} />
     </>
   )
 }
