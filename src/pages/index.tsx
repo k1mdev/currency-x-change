@@ -43,14 +43,20 @@ export default function Home() {
   const [amntB, setAmntB] = useState<number>(0);
 
 
-  const handleCurAChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-    const { name, value, tagName } = e.target;
-    tagName === "SELECT" ? setCurA(value) : setAmntA(parseFloat(value));
+  const handleChangeCurA = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    setCurA(e.target.value);
   }
 
-  const handleCurBChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value, tagName } = e.target;
-    tagName === "SELECT" ? setCurB(value) : setAmntB(parseFloat(value));
+  const handleChangeAmntA = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmntA(parseFloat(e.target.value));
+  }
+
+  const handleChangeCurB = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurB(e.target.value);
+  }
+
+  const handleChangeAmntB = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmntB(parseFloat(e.target.value));
   }
 
 
@@ -68,8 +74,8 @@ export default function Home() {
   return (
     <>
       <Equivalence curA={curA} curB={curB} />
-      <Dropdown currencies={currencies} onChange={handleCurAChange} />
-      <Dropdown currencies={currencies} onChange={handleCurBChange} />
+      <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} onChangeAmnt={handleChangeAmntA} />
+      <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} />
     </>
   )
 }
