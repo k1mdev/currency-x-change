@@ -43,7 +43,7 @@ export default function Home() {
   }, []);
 
   const [curA, setCurA] = useState<string>(currencies[0]);
-  const [curB, setCurB] = useState<string>(currencies[1]);
+  const [curB, setCurB] = useState<string>(currencies[0]);
 
   const [amntA, setAmntA] = useState<number>(0);
   const [amntB, setAmntB] = useState<number>(0);
