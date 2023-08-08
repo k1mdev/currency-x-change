@@ -3,12 +3,14 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from 'react'
-import { error } from 'console'
 import Dropdown from '@/components/Dropdown'
 import Equivalence from '@/components/Equivalence'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import Header from '@/components/Header'
 
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
-
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
 const inter = Inter({ subsets: ['latin'] })
@@ -77,9 +79,14 @@ export default function Home() {
 
   return (
     <>
-      <Equivalence curA={curA} curB={curB} rates={rates} />
-      <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
-      <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} />
+      <Header />
+      <Equivalence curA={curA} curB={curB} rates={rates} numA={amntA}/>
+      <div className={styles.dropdownContainer}>
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
+        <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} />
+      </div>
+      <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
     </>
   )
 }

@@ -12,22 +12,16 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAm
 
 
   return (
-    <div className="wholeContainer">
-      <label htmlFor="curSelect">Choose a currency:</label>
-      <select id="curSelect" onChange={onChangeCur}>
+    <div className={styles.wholeContainer}>
+      {/* <label htmlFor="curSelect">Choose a currency:</label> */}
+      <select id="curSelect" className={styles.select} onChange={onChangeCur}>
         {currencies.map((cur) => (
           <option key={cur}>
             {cur}
           </option>
         ))}
       </select>
-
-      <div className={styles.inputContainer}>
-        <label htmlFor="amountInput" className={styles.label}>Amount:</label>
-        <input id="amountInput" onChange={onChangeAmnt}
-          className={styles.input} type="text" disabled={!enabled} placeholder="00.00" />
-      </div>
-
+      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} disabled={!enabled} type="number" placeholder="00.00"/>
     </div>
   );
 };

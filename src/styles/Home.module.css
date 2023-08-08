@@ -227,3 +227,22 @@
     transform: rotate(0deg);
   }
 }
+
+.dropdownContainer {
+  display: flex;
+  justify-content: center;
+  width: 650px;
+  margin: 0 auto;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.arrow {
+  align-self: center;
+}
+
+.swapButton {
+  display: block;
+  margin: 0 auto;
+  transform: rotate(90deg);
+}
