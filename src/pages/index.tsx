@@ -81,7 +81,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Equivalence curA={curA} curB={curB} rates={rates} />
+      <Equivalence curA={curA} curB={curB} rates={rates} numA={amntA}/>
       <div className={styles.dropdownContainer}>
         <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
