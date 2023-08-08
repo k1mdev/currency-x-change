@@ -2,6 +2,11 @@ export type APIErrorResponse = {
   success: false
   error: {
     info: string
+    message?: undefined
+    code: number | string
+  } | {
+    info?: undefined
+    message: string
     code: number | string
   }
 }

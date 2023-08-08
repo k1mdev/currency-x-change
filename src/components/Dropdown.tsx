@@ -3,11 +3,12 @@ import styles from '../styles/Dropdown.module.css';
 
 interface DropdownProps {
   currencies: string[];
+  enabled: boolean
   onChangeCur: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onChangeAmnt: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({currencies, onChangeCur, onChangeAmnt}) => {
+const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAmnt, enabled }) => {
 
 
   return (
@@ -20,10 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({currencies, onChangeCur, onChangeAmn
           </option>
         ))}
       </select>
-
-
-      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} type="number" placeholder="00.00"/>
-
+      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} disabled={!enabled} type="number" placeholder="00.00"/>
     </div>
   );
 };

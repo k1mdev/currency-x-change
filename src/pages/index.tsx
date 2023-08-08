@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from 'react'
-import { error } from 'console'
 import Dropdown from '@/components/Dropdown'
 import Equivalence from '@/components/Equivalence'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,37 +10,41 @@ import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import Header from '@/components/Header'
 
-const inter = Inter({ subsets: ['latin'] })
+import { APIErrorResponse, APIHistoricalResponse } from '../responses'
 
-type FetchedSymbols = {
-  [key: string]: string;
-}
+type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  const [symbols, setSymbols] = useState<FetchedSymbols>();
-  
-  useEffect(() => {
-    fetch('/api/symbols')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error fetching symbols');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setSymbols(data.symbols);
-      })
-      .catch((error) => {
-        console.error('Error fetching symbols');
-      });
-  }, []);
-
+  const [rates, setRates] = useState<FetchedRates>();
 
   let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
 
-  const [curA, setCurA] = useState<string>(`${currencies[0]}`);
-  const [curB, setCurB] = useState<string>(`${currencies[0]}`);
+  useEffect(() => {
+    console.log('calling Effect')
+    let ignore = false
+    const datestring = new Date().toISOString().split("T")[0]
+    const searchParams = new URLSearchParams()
+    searchParams.set('base', currencies[0])
+    searchParams.set('symbols', currencies.slice(1).join(','))
+    if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
+      .then(response => {
+        return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
+      })
+      .then(data => {
+        if (!data.success) throw new Error(data.error.info ?? data.error.message)
+        setRates(data)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+    return () => { ignore = true }
+  }, []);
+
+  const [curA, setCurA] = useState<string>(currencies[0]);
+  const [curB, setCurB] = useState<string>(currencies[1]);
 
   const [amntA, setAmntA] = useState<number>(0);
   const [amntB, setAmntB] = useState<number>(0);
@@ -78,11 +81,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Equivalence curA={curA} curB={curB} />
+      <Equivalence curA={curA} curB={curB} rates={rates} />
       <div className={styles.dropdownContainer}>
-        <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} onChangeAmnt={handleChangeAmntA} />
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} />
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} />
       </div>
       <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
     </>

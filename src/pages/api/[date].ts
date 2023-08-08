@@ -18,6 +18,7 @@ export default async function handler(
   if (!req.url) {
     return res.status(404).json({ success: false, error: { code: 404, info: "Error parsing URL on server" } })
   }
+
   const { date } = req.query
   if (!date || isArray(date)) {
     return res.status(400).json({
@@ -29,14 +30,14 @@ export default async function handler(
     })
   }
 
-  const { searchParams } = new URL(req.url)
+  const searchParams = new URLSearchParams(req.url)
   const result = await redis.get<APIHistoricalResponse>(date + searchParams.toString())
 
   if (result) {
     return res.status(200).json(result)
   }
 
-  const response = await fetch(`https://api.exchangeratesapi.io/v1/${date}?access_key=${api_key}&${searchParams.toString()}`)
+  const response = await fetch(`http://api.exchangeratesapi.io/v1/${date}?access_key=${api_key}&${searchParams.toString()}`)
     .then(data => data.json() as Promise<HistoricalResponse>)
 
   if (!response.success) {
