@@ -6,6 +6,10 @@ import { useState, useEffect } from 'react'
 import { error } from 'console'
 import Dropdown from '@/components/Dropdown'
 import Equivalence from '@/components/Equivalence'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import Header from '@/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -73,9 +77,14 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       <Equivalence curA={curA} curB={curB} />
-      <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} onChangeAmnt={handleChangeAmntA} />
-      <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} />
+      <div className={styles.dropdownContainer}>
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} onChangeAmnt={handleChangeAmntA} />
+        <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+        <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} />
+      </div>
+      <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
     </>
   )
 }
