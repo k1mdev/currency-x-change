@@ -2,6 +2,9 @@ import React from "react";
 import styles from '../styles/ConvertedDropdown.module.css';
 import { APIHistoricalResponse } from "@/responses";
 
+function equalizeRates(rateA: number, rateB: number) {
+  return [rateA/rateA, rateB/rateA] as const
+}
 
 interface ConvertedDropdownProps {
   curA: string;
@@ -11,15 +14,16 @@ interface ConvertedDropdownProps {
   currencies: string[];
   enabled: boolean
   onChangeCur: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  onChangeAmnt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   rates?: Pick<APIHistoricalResponse, 'rates'>
 
 }
 
-const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, amntA, curB, curA, onChangeCur, onChangeAmnt, enabled, rates }) => {
+const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, amntA, curB, curA, onChangeCur, enabled, rates }) => {
 
-  let convRate = rates ? rates.rates[curB] : 1;
+  // NOTE: Maybe I use a Ref here?
+  if (!rates) return ( <> <h2> No </h2> </>)
 
+  const [rateA, rateB] = equalizeRates(rates?.rates[curA], rates?.rates[curB])
 
   return (
       <div className={styles.wholeContainer}>
@@ -31,8 +35,8 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, amntA
               </option>
               ))}
           </select>
-          <textarea id="amountInput" className={styles.output} disabled={!enabled} placeholder="00.00">{amntA * convRate}</textarea>
-          <h1> 1 {curA} = {convRate} {curB}</h1>
+          { /* TODO: Refactor out the textarea for another attribute */}
+          <textarea id="amountInput" className={styles.output} disabled={!enabled} placeholder="00.00" value={(rateB * amntA).toFixed(2)}></textarea>
       </div>
   )
 }

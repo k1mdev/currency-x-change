@@ -22,13 +22,13 @@ export default function Home() {
 
   let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
 
+  // NOTE: Maybe I extract this into a Hook?
   useEffect(() => {
-    console.log('calling Effect')
     let ignore = false
     const datestring = new Date().toISOString().split("T")[0]
     const searchParams = new URLSearchParams()
     searchParams.set('base', currencies[0])
-    searchParams.set('symbols', currencies.slice(1).join(','))
+    searchParams.set('symbols', currencies.join(','))
     if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
       .then(response => {
         return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
@@ -67,6 +67,7 @@ export default function Home() {
   }
 
 
+  // TODO: Delete these before going to prod
   useEffect(() => {
     console.log("curA:", curA);
     console.log("AmountA:", amntA);
@@ -81,11 +82,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Equivalence curA={curA} curB={curB} rates={rates}/>
+      <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]}/>
       <div className={styles.dropdownContainer}>
         <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} curA={curA} curB={curB} amntA={amntA} amntB={amntB}  />
+        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates}/>
       </div>
       <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
     </>

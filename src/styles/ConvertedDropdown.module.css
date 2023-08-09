@@ -17,12 +17,13 @@
     text-align: center;
     font-size: 25px;
     border-bottom: 1px solid black;
+    appearance: none
 }
 
 .output {
     height: 60px;
     font-size: 40px;
-    color: rgb(70, 70, 70);
+    color: white;
     padding-left: 10px;
     resize: none;
 }
