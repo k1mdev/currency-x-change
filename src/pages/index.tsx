@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
 import ConvertedDropdown from '@/components/ConvertedDropdown'
@@ -90,6 +91,7 @@ export default function Home() {
         <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates}/>
       </div>
       <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
+      <Footer />
     </>
   )
 }
