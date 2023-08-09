@@ -1,6 +1,12 @@
 import React from "react";
 import styles from '../styles/ConvertedDropdown.module.css';
 import { APIHistoricalResponse } from "@/responses";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+    subsets: ['latin'],
+    weight: '400'
+})
 
 function equalizeRates(rateA: number, rateB: number) {
   return [rateA/rateA, rateB/rateA] as const
@@ -36,7 +42,7 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, amntA
               ))}
           </select>
           { /* TODO: Refactor out the textarea for another attribute */}
-          <textarea id="amountInput" className={styles.output} disabled={!enabled} placeholder="00.00" value={(rateB * amntA).toFixed(2)}></textarea>
+          <textarea id="amountInput" className={`${styles.output} ${montserrat.className}`} disabled={!enabled} placeholder="00.00" value={(rateB * amntA).toFixed(2)}></textarea>
       </div>
   )
 }

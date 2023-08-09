@@ -17,14 +17,18 @@
     text-align: center;
     font-size: 25px;
     border-bottom: 1px solid black;
-    appearance: none;
+    /* appearance: none; */
+}
+
+.select:focus {
+    outline: none;
 }
 
 .input {
     height: 60px;
     font-size: 40px;
-    color: white;
     padding-left: 10px;
+    color: rgb(70, 70, 70);
 }
 
 .input::-webkit-inner-spin-button,

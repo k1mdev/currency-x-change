@@ -1,5 +1,11 @@
 import React from "react";
 import styles from '../styles/Dropdown.module.css';
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+    subsets: ['latin'],
+    weight: '400'
+})
 
 interface DropdownProps {
   currencies: string[];
@@ -20,7 +26,7 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAm
           </option>
         ))}
       </select>
-      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} disabled={!enabled} type="number" placeholder="00.00" />
+      <input id="amountInput" onChange={onChangeAmnt} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="00.00" />
     </div>
   );
 };

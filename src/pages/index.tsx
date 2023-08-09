@@ -16,6 +16,7 @@ type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
 
   const [rates, setRates] = useState<FetchedRates>();

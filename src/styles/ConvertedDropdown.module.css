@@ -1,7 +1,7 @@
 .wholeContainer {
     margin: 0px;
     padding: 0px;
-    background-color: red;
+    /* background-color: red; */
     width: 250px;
     display: flex;
     flex-direction: column;
@@ -17,7 +17,11 @@
     text-align: center;
     font-size: 25px;
     border-bottom: 1px solid black;
-    appearance: none
+    /* appearance: none */
+}
+
+.select:focus {
+    outline: none;
 }
 
 .output {
@@ -26,6 +30,7 @@
     color: white;
     padding-left: 10px;
     resize: none;
+    vertical-align: auto;
 }
 
 
