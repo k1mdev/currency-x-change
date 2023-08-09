@@ -6,20 +6,21 @@ import { APIHistoricalResponse } from "@/responses";
 interface EquivalenceProps {
   curA: string;
   curB: string;
-  numA: number
   rates?: Pick<APIHistoricalResponse, 'rates'>
 }
 
-const Equivalence: React.FC<EquivalenceProps> = ({ curA, curB, rates, numA }) => {
-  const props = {
-    currencyA: curA,
-    currencyCnvtd: rates ? rates.rates[curB] : 1,
-    currencyB: curB
-  };
+const Equivalence: React.FC<EquivalenceProps> = ({ curA, curB, rates }) => {
+  // const props = {
+  //   currencyA: curA,
+  //   convRate: rates ? rates.rates[curB] : 1,
+  //   currencyB: curB
+  // };
+
+  let convRate = rates ? rates.rates[curB] : 1;
 
   return (
     <div className={styles.statement}>
-      <h1> {numA} {curA} = {props.currencyCnvtd * numA} {curB}</h1>
+      <h1> 1 {curA} = {convRate} {curB}</h1>
     </div>
   )
 }

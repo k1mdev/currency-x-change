@@ -11,6 +11,7 @@ import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import Header from '@/components/Header'
 
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
+import ConvertedDropdown from '@/components/ConvertedDropdown'
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
 const inter = Inter({ subsets: ['latin'] })
@@ -80,11 +81,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Equivalence curA={curA} curB={curB} rates={rates} numA={amntA}/>
+      <Equivalence curA={curA} curB={curB} rates={rates}/>
       <div className={styles.dropdownContainer}>
         <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <Dropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} />
+        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} onChangeAmnt={handleChangeAmntB} curA={curA} curB={curB} amntA={amntA} amntB={amntB}  />
       </div>
       <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
     </>

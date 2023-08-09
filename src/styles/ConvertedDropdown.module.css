@@ -1,0 +1,30 @@
+.wholeContainer {
+    margin: 0px;
+    padding: 0px;
+    background-color: red;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+}
+
+.wholeContainer * {
+    border: none;
+}
+
+.select {
+    height: 40px;
+    text-align: center;
+    font-size: 25px;
+    border-bottom: 1px solid black;
+}
+
+.output {
+    height: 60px;
+    font-size: 40px;
+    color: rgb(70, 70, 70);
+    padding-left: 10px;
+    resize: none;
+}
+
+

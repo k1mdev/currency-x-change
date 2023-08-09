@@ -10,7 +10,6 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAmnt, enabled }) => {
 
-
   return (
     <div className={styles.wholeContainer}>
       {/* <label htmlFor="curSelect">Choose a currency:</label> */}
@@ -21,7 +20,7 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAm
           </option>
         ))}
       </select>
-      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} disabled={!enabled} type="number" placeholder="00.00"/>
+      <input id="amountInput" onChange={onChangeAmnt} className={styles.input} disabled={!enabled} type="number" placeholder="00.00" />
     </div>
   );
 };
