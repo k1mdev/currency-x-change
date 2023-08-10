@@ -80,15 +80,20 @@ export default function Home() {
     console.log("AmountB:", amntB);
   }, [curB, amntB]);
 
+  // INFO: This is a stopgap to enable project to build
+  if (!rates) { 
+    return <p> Loading... </p>
+  }
+
 
   return (
     <>
       <Header />
-      <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]}/>
+      <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} />
       <div className={styles.dropdownContainer}>
         <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates}/>
+        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates} />
       </div>
       <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
       <Footer />
