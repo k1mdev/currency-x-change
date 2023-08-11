@@ -240,9 +240,3 @@
 .arrow {
   align-self: center;
 }
-
-.swapButton {
-  display: block;
-  margin: 0 auto;
-  transform: rotate(90deg);
-}

@@ -13,6 +13,7 @@ import Footer from '@/components/Footer'
 
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
 import ConvertedDropdown from '@/components/ConvertedDropdown'
+import SwapButton from '@/components/SwapButton'
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
 const inter = Inter({ subsets: ['latin'] })
@@ -64,8 +65,22 @@ export default function Home() {
     setCurB(e.target.value);
   }
 
-  const handleChangeAmntB = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAmntB = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setAmntB(parseFloat(e.target.value));
+  }
+
+  // Calculates and sets amntB in ConvertedDropdown.tsx
+  const changeAmntB = (amntB: number) => {
+    setAmntB(amntB);
+  }
+
+  const handleClick = () => {
+    const tempCur = curA;
+    setCurA(curB);
+    setCurB(tempCur);
+
+    setAmntA(amntB);
+
   }
 
 
@@ -91,11 +106,12 @@ export default function Home() {
       <Header />
       <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} />
       <div className={styles.dropdownContainer}>
-        <Dropdown currencies={currencies} onChangeCur={handleChangeCurA} enabled={true} onChangeAmnt={handleChangeAmntA} />
+        <Dropdown currencies={currencies} curA={curA} onChangeCur={handleChangeCurA} enabled={true} amntA={amntA} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates} />
+        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} changeAmntB={changeAmntB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates} />
       </div>
-      <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" />
+      {/* <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" /> */}
+      <SwapButton handleClick={handleClick}/>
       <Footer />
     </>
   )

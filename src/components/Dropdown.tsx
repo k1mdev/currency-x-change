@@ -9,24 +9,40 @@ const montserrat = Montserrat({
 
 interface DropdownProps {
   currencies: string[];
+  curA: string;
+  amntA: number;
   enabled: boolean
   onChangeCur: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onChangeAmnt: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ currencies, onChangeCur, onChangeAmnt, enabled }) => {
+const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, amntA, onChangeCur, onChangeAmnt, enabled }) => {
 
   return (
     <div className={styles.wholeContainer}>
       {/* <label htmlFor="curSelect">Choose a currency:</label> */}
       <select id="curSelect" className={styles.select} onChange={onChangeCur}>
-        {currencies.map((cur) => (
-          <option key={cur}>
-            {cur}
-          </option>
-        ))}
+        {currencies.map((cur) => {
+
+          if (cur == curA) {
+            return (
+              <option key={cur} selected>
+                {cur}
+              </option>
+            )
+          }
+          else {
+            return (
+              <option key={cur}>
+                {cur}
+              </option>
+            )
+          }
+
+        })}
       </select>
-      <input id="amountInput" onChange={onChangeAmnt} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="00.00" />
+      {/* Since value is set to amntA, placeholder is overridden with initial amntA which is 0 */}
+      <input id="amountInput" value={amntA} onChange={onChangeAmnt} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="00.00" />
     </div>
   );
 };
