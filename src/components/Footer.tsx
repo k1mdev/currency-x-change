@@ -34,14 +34,14 @@ const Footer: React.FC = () => {
           <ul className={styles.list}>
             <li className={styles.gap}>
               <a className={styles.link}
-                href="https://www.linkedin.com/in/jason-simmonds-a72806263">
+                href="https://www.linkedin.com/in/jason-simmonds-a72806263" target="_blank" rel="noopener">
                 <FontAwesomeIcon icon={faGithub} /> {" "}
                 LinkedIn
               </a>
             </li>
             <li>
               <a className={styles.link}
-                href="https://github.com/khazixi">
+                href="https://github.com/khazixi" target="_blank" rel="noopener">
                 <FontAwesomeIcon icon={faLinkedin} /> {" "}
                 GitHub
               </a>
