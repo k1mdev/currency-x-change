@@ -1,7 +1,6 @@
 import { APIHistoricalResponse, APIErrorResponse } from '@/responses'
 import { Redis } from '@upstash/redis'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { isArray } from 'util'
 
 type HistoricalResponse = APIErrorResponse | APIHistoricalResponse
 
@@ -20,7 +19,7 @@ export default async function handler(
   }
 
   const { date } = req.query
-  if (!date || isArray(date)) {
+  if (!date || Array.isArray(date)) {
     return res.status(400).json({
       success: false,
       error: {
