@@ -12,7 +12,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ handleClick }) => {
     return (
         <>
             <button type="button" onClick={handleClick}><FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" /></button>
-
+            
         </>
     )
 }

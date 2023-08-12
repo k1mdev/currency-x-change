@@ -77,7 +77,6 @@ export default function Home() {
     setCurA(curB);
     setCurB(tempCur);
 
-    setAmntA(amntB);
 
   }
 
