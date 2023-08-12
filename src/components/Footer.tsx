@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
           <ul className={styles.list}>
             <li className={styles.gap}>
               <a className={styles.link}
-                href="#" target="_blank" rel="noopener">
+                href="https://github.com/k1mdev" target="_blank" rel="noopener">
                 <FontAwesomeIcon icon={faGithub} /> {" "}
                 GitHub
               </a>
