@@ -9,6 +9,7 @@ interface SwapButtonProps {
 }
 
 const SwapButton: React.FC<SwapButtonProps> = ({ handleClick }) => {
+
     return (
         <div className={styles.container}>
             <button type="button" onClick={handleClick} className={styles.swapButton}><FontAwesomeIcon icon={faArrowsRotate} size="3x" /></button>
