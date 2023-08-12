@@ -3,8 +3,8 @@ import styles from '../styles/Dropdown.module.css';
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
-    subsets: ['latin'],
-    weight: '400'
+  subsets: ['latin'],
+  weight: '400'
 })
 
 interface DropdownProps {
