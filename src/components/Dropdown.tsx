@@ -10,13 +10,14 @@ const montserrat = Montserrat({
 interface DropdownProps {
   currencies: string[];
   curA: string;
+  curB: string;
   amntA: number;
   enabled: boolean
   onChangeCur: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onChangeAmnt: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, amntA, onChangeCur, onChangeAmnt, enabled }) => {
+const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, curB, amntA, onChangeCur, onChangeAmnt, enabled }) => {
 
   return (
     <div className={styles.wholeContainer}>
@@ -30,6 +31,8 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, amntA, onChangeCu
                 {cur}
               </option>
             )
+          }
+          else if (cur == curB) {
           }
           else {
             return (

@@ -48,6 +48,8 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ changeAmntB, curr
               </option>
             )
           }
+          else if (cur == curA) {
+          }
           else {
             return (
               <option key={cur}>

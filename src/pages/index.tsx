@@ -103,7 +103,7 @@ export default function Home() {
       <Header />
       <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} />
       <div className={styles.dropdownContainer}>
-        <Dropdown currencies={currencies} curA={curA} onChangeCur={handleChangeCurA} enabled={true} amntA={amntA} onChangeAmnt={handleChangeAmntA} />
+        <Dropdown currencies={currencies} curA={curA} curB={curB} onChangeCur={handleChangeCurA} enabled={true} amntA={amntA} onChangeAmnt={handleChangeAmntA} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
         <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} changeAmntB={changeAmntB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates} />
       </div>
