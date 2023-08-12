@@ -184,6 +184,7 @@
       rgba(var(--callout-rgb), 0.5)
     );
     background-clip: padding-box;
+    -webkit-backdrop-filter: blur(24px);
     backdrop-filter: blur(24px);
   }
 
@@ -239,4 +240,17 @@
 
 .arrow {
   align-self: center;
+}
+
+@media screen and (max-width: 600px) {
+  .arrow {
+    visibility: hidden;
+  }
+
+  .dropdownContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
