@@ -1,5 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+
 .swapButton {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
+  transform: rotate(90deg);
+  background-color: white;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  border: none;
+}
+
+@keyframes buttonSpin {
+  from {
     transform: rotate(90deg);
   }
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.swapButton:focus {
+  animation: buttonSpin 0.25s;
+  overflow: hidden;
+}

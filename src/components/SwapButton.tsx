@@ -10,10 +10,10 @@ interface SwapButtonProps {
 
 const SwapButton: React.FC<SwapButtonProps> = ({ handleClick }) => {
     return (
-        <>
-            <button type="button" onClick={handleClick}><FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" /></button>
+        <div className={styles.container}>
+            <button type="button" onClick={handleClick} className={styles.swapButton}><FontAwesomeIcon icon={faArrowsRotate} size="3x" /></button>
             
-        </>
+        </div>
     )
 }
 
