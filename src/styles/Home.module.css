@@ -232,7 +232,7 @@
 .dropdownContainer {
   display: flex;
   justify-content: center;
-  width: 650px;
+  /* width: 650px; */
   margin: 0 auto;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -240,4 +240,17 @@
 
 .arrow {
   align-self: center;
+}
+
+@media screen and (max-width: 600px) {
+  .arrow {
+    visibility: hidden;
+  }
+
+  .dropdownContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
