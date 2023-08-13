@@ -1,20 +1,16 @@
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from 'react'
-import Dropdown from '@/components/Dropdown'
-import Equivalence from '@/components/Equivalence'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
+import styles from '@/styles/Home.module.css'
+import Header from '@/components/Header'
+import Equivalence from '@/components/Equivalence'
+import Dropdown from '@/components/Dropdown'
 import ConvertedDropdown from '@/components/ConvertedDropdown'
 import SwapButton from '@/components/SwapButton'
-type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
+import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
 
 export default function Home() {
@@ -22,6 +18,39 @@ export default function Home() {
   const [rates, setRates] = useState<FetchedRates>();
 
   let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
+
+  const [curA, setCurA] = useState<string>(currencies[0]);
+  const [curB, setCurB] = useState<string>(currencies[0]);
+
+  const [amntA, setAmntA] = useState<number>(0);
+  const [amntB, setAmntB] = useState<number>(0);
+
+  const handleChangeCurA = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    setCurA(e.target.value);
+  }
+
+  const handleChangeAmntA = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmntA(parseFloat(e.target.value));
+  }
+
+  const handleChangeCurB = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurB(e.target.value);
+  }
+
+  const handleChangeAmntB = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setAmntB(parseFloat(e.target.value));
+  }
+
+  // Sets the calculated amntB in ConvertedDropdown.tsx (can't pass setAmntB from useState hook as prop)
+  const amntBSetter = (amntB: number) => {
+    setAmntB(amntB);
+  }
+
+  const handleSwap = () => {
+    const tempCur = curA;
+    setCurA(curB);
+    setCurB(tempCur);
+  }
 
   // NOTE: Maybe I extract this into a Hook?
   useEffect(() => {
@@ -44,71 +73,21 @@ export default function Home() {
     return () => { ignore = true }
   }, []);
 
-  const [curA, setCurA] = useState<string>(currencies[0]);
-  const [curB, setCurB] = useState<string>(currencies[0]);
-
-  const [amntA, setAmntA] = useState<number>(0);
-  const [amntB, setAmntB] = useState<number>(0);
-
-
-  const handleChangeCurA = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-    setCurA(e.target.value);
-  }
-
-  const handleChangeAmntA = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmntA(parseFloat(e.target.value));
-  }
-
-  const handleChangeCurB = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurB(e.target.value);
-  }
-
-  const handleChangeAmntB = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setAmntB(parseFloat(e.target.value));
-  }
-
-  // Calculates and sets amntB in ConvertedDropdown.tsx
-  const changeAmntB = (amntB: number) => {
-    setAmntB(amntB);
-  }
-
-  const handleClick = () => {
-    const tempCur = curA;
-    setCurA(curB);
-    setCurB(tempCur);
-
-
-  }
-
-
-  // TODO: Delete these before going to prod
-  useEffect(() => {
-    console.log("curA:", curA);
-    console.log("AmountA:", amntA);
-  }, [curA, amntA]);
-
-  useEffect(() => {
-    console.log("curB:", curB);
-    console.log("AmountB:", amntB);
-  }, [curB, amntB]);
-
   // INFO: This is a stopgap to enable project to build
   if (!rates) { 
     return <p> Loading... </p>
   }
-
 
   return (
     <>
       <Header />
       <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} />
       <div className={styles.dropdownContainer}>
-        <Dropdown currencies={currencies} curA={curA} curB={curB} onChangeCur={handleChangeCurA} enabled={true} amntA={amntA} onChangeAmnt={handleChangeAmntA} />
+        <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-        <ConvertedDropdown currencies={currencies} onChangeCur={handleChangeCurB} onChangeAmnt={handleChangeAmntB} changeAmntB={changeAmntB} enabled={false} curA={curA} curB={curB} amntA={amntA} amntB={amntB} rates={rates} />
+        <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
       </div>
-      {/* <FontAwesomeIcon icon={faArrowsRotate} className={styles.swapButton} size="3x" /> */}
-      <SwapButton handleClick={handleClick}/>
+      <SwapButton handleSwap={handleSwap} />
       <Footer />
     </>
   )

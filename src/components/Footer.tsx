@@ -1,6 +1,6 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from '../styles/Footer.module.css'
+import styles from '../styles/Footer.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Montserrat } from "next/font/google";
 

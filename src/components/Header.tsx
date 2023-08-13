@@ -1,7 +1,6 @@
 import React from "react";
 import styles from '../styles/Header.module.css';
 import { Audiowide } from "next/font/google";
-import { Montserrat } from "next/font/google";
 
 const audiowide = Audiowide({
     subsets: ['latin'],

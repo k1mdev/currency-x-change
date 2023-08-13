@@ -1,7 +1,6 @@
 .wholeContainer {
     margin: 0px;
     padding: 0px;
-    /* background-color: red; */
     width: 250px;
     display: flex;
     flex-direction: column;

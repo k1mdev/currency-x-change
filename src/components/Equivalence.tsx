@@ -1,22 +1,21 @@
 import React from "react";
-import styles from "../styles/Equivalence.module.css"
-
+import styles from "../styles/Equivalence.module.css";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
-    subsets: ['latin'],
-    weight: '400'
+  subsets: ['latin'],
+  weight: '400'
 })
 
 function equalizeRate(rateA: number, rateB: number) {
-  return rateB/rateA
+  return rateB/rateA;
 }
 
 interface EquivalenceProps {
   curA: string;
   curB: string;
-  rateA: number
-  rateB: number
+  rateA: number;
+  rateB: number;
 }
 
 const Equivalence: React.FC<EquivalenceProps> = ({ curA, curB, rateA, rateB }) => {

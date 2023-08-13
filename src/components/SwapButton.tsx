@@ -1,19 +1,17 @@
-import React from "react";
+import React from "react"
+import styles from '@/styles/SwapButton.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 
-import styles from '@/styles/SwapButton.module.css'
 
 interface SwapButtonProps {
-    handleClick: () => void
+    handleSwap: () => void
 }
 
-const SwapButton: React.FC<SwapButtonProps> = ({ handleClick }) => {
-
+const SwapButton: React.FC<SwapButtonProps> = ({ handleSwap }) => {
     return (
         <div className={styles.container}>
-            <button type="button" onClick={handleClick} className={styles.swapButton}><FontAwesomeIcon icon={faArrowsRotate} size="3x" /></button>
-            
+            <button type="button" onClick={handleSwap} className={styles.swapButton}><FontAwesomeIcon icon={faArrowsRotate} size="3x" /></button>
         </div>
     )
 }
