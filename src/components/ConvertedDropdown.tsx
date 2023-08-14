@@ -2,6 +2,7 @@ import React from "react";
 import styles from '../styles/ConvertedDropdown.module.css';
 import { APIHistoricalResponse } from "@/responses";
 import { Montserrat } from "next/font/google";
+import { isNumber } from "util";
 
 const montserrat = Montserrat({
     subsets: ['latin'],
@@ -9,7 +10,7 @@ const montserrat = Montserrat({
 })
 
 function equalizeRates(rateA: number, rateB: number) {
-  return [rateA/rateA, rateB/rateA] as const;
+  return  rateB/rateA
 }
 
 interface ConvertedDropdownProps {
@@ -29,7 +30,7 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, curA,
   // NOTE: Maybe I use a Ref here?
   if (!rates) return ( <> <h2> No </h2> </>);
 
-  const [rateA, rateB] = equalizeRates(rates?.rates[curA], rates?.rates[curB]);
+  const rateB = equalizeRates(rates?.rates[curA], rates?.rates[curB])
 
   amntBSetter(parseFloat((rateB * amntA).toFixed(2)));
 
@@ -57,7 +58,7 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, curA,
           })}
           </select>
           { /* TODO: Refactor out the textarea for another attribute */}
-          <textarea id="amountInput" className={`${styles.output} ${montserrat.className}`} onChange={handleChangeAmntB} disabled={!enabled} placeholder="00.00" value={(rateB * amntA).toFixed(2)}></textarea>
+          <textarea id="amountInput" className={`${styles.output} ${montserrat.className}`} onChange={handleChangeAmntB} disabled={!enabled} placeholder="0.00" value={(amntA) ? (rateB * amntA).toFixed(2) : 0.00.toFixed(2)}></textarea>
       </div>
   )
 }
