@@ -254,3 +254,24 @@
     align-items: center;
   }
 }
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: block;
+}
+
+.equivalence {
+  display: block;
+}
+
+.footer {
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
+}

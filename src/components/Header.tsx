@@ -9,11 +9,11 @@ const audiowide = Audiowide({
 
 const Header: React.FC = () => {
     return (
-        <div className={styles.header}>
+        <header className={styles.header}>
             <h1 className={audiowide.className}>Currency</h1>
             <h1 className={`${styles.largeX} ${audiowide.className}`}>X</h1>
             <h1 className={audiowide.className}>Change</h1>
-        </div>
+        </header>
     )
 }
 

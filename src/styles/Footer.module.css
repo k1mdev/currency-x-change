@@ -1,4 +1,6 @@
 .footer {
+  padding: 0;
+  margin: 0;
   background: rgb(51,51,64);
   width: 100%;
   position: absolute;
