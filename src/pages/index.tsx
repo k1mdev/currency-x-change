@@ -79,16 +79,16 @@ export default function Home() {
   }
 
   return (
-    <>
-      <Header />
-      <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} />
+    <div className={styles.pageContainer}>
+      <div className={styles.header}> <Header /> </div>
+      <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
       <div className={styles.dropdownContainer}>
         <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
         <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
       </div>
       <SwapButton handleSwap={handleSwap} />
-      <Footer />
-    </>
+      <div className={styles.footer}> <Footer /> </div>
+    </div>
   )
 }
