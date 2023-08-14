@@ -21,7 +21,6 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, curB, amntA, hand
 
   return (
     <div className={styles.wholeContainer}>
-      {/* <label htmlFor="curSelect">Choose a currency:</label> */}
       <select id="curSelect" className={styles.select} onChange={handleChangeCurA}>
         {currencies.map((cur) => {
           if (cur == curA) {
@@ -43,11 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({ currencies, curA, curB, amntA, hand
         })}
       </select>
       {/* Since value is set to amntA, placeholder is overridden with initial amntA which is 0 */}
-<<<<<<< Updated upstream
-      <input id="amountInput" value={amntA} onChange={handleChangeAmntA} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="00.00" />
-=======
-      <input id="amountInput" value={amntA} onChange={onChangeAmnt} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="0.00" />
->>>>>>> Stashed changes
+      <input id="amountInput" value={amntA} onChange={handleChangeAmntA} className={`${styles.input} ${montserrat.className}`} disabled={!enabled} type="number" placeholder="0.00" />
     </div>
   );
 };
