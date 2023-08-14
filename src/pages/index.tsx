@@ -87,7 +87,7 @@ export default function Home() {
         <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
         <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
       </div>
-      <SwapButton handleSwap={handleSwap} />
+      <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
       <div className={styles.footer}> <Footer /> </div>
     </div>
   )

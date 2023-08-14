@@ -262,12 +262,12 @@
   padding: 0;
 }
 
-.header {
+.pageContainer > * {
   display: block;
 }
 
-.equivalence {
-  display: block;
+.dropdownContainer {
+  display: flex;
 }
 
 .footer {
