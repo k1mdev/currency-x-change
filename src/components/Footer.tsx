@@ -9,7 +9,11 @@ const montserrat = Montserrat({
   weight: '200'
 })
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  className?: string
+}
+
+const Footer: React.FC<FooterProps> = ({ className }) => {
 
   return (
     <>

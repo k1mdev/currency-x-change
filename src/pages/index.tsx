@@ -74,7 +74,7 @@ export default function Home() {
   }, []);
 
   // INFO: This is a stopgap to enable project to build
-  if (!rates) { 
+  if (!rates) {
     return <p> Loading... </p>
   }
 
@@ -88,7 +88,9 @@ export default function Home() {
         <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
       </div>
       <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
-      <div className={styles.footer}> <Footer /> </div>
+      <div className={styles.flex__footer}>
+        <Footer />
+      </div>
     </div>
   )
 }
