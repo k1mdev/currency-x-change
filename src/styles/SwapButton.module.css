@@ -9,6 +9,7 @@
   margin: 0 auto;
   transform: rotate(90deg);
   background-color: white;
+  color: #007bff;
   border-radius: 100%;
   width: 60px;
   height: 60px;
@@ -22,6 +23,10 @@
   to {
     transform: rotate(270deg);
   }
+}
+
+.swapButton:after {
+  animation: buttonSpin 0.5s;
 }
 
 .swapButton:focus {
