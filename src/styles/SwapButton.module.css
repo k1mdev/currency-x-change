@@ -25,14 +25,18 @@
   }
 }
 
-.swapButton:after {
-  animation: buttonSpin 0.5s;
+.button {
+  animation: buttonSpin 0.5s infinite;
 }
 
-.swapButton:focus {
-  outline: 2px solid #007bff;
-  border: 2px solid #007bff;
-  background-color: #f0f0f0;
-  color: #007bff;
-  animation: buttonSpin 0.25s;
-}
+/* .swapButton:active { */
+/*   animation: none; */
+/* } */
+/**/
+/* .swapButton:focus { */
+/*   outline: 2px solid #007bff; */
+/*   border: 2px solid #007bff; */
+/*   background-color: #f0f0f0; */
+/*   color: #007bff; */
+/*   animation: buttonSpin 0.25s; */
+/* } */
