@@ -17,6 +17,13 @@
   }
 }
 
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .arrow {
   align-self: center;
   margin-left: 10px;

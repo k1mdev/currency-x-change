@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightLong, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
 import styles from '@/styles/Home.module.css'
 import Header from '@/components/Header'
@@ -9,6 +9,7 @@ import Dropdown from '@/components/Dropdown'
 import ConvertedDropdown from '@/components/ConvertedDropdown'
 import SwapButton from '@/components/SwapButton'
 import Footer from '@/components/Footer'
+import { faFortAwesome } from '@fortawesome/free-brands-svg-icons'
 
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
@@ -73,9 +74,12 @@ export default function Home() {
     return () => { ignore = true }
   }, []);
 
-  // INFO: This is a stopgap to enable project to build
   if (!rates) {
-    return <p> Loading... </p>
+    return (
+      <div>
+        <FontAwesomeIcon icon={faSpinner} className={styles.loading} spin size='6x' />
+      </div>
+    )
   }
 
   return (
