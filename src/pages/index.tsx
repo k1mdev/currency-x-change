@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightLong, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
 import styles from '@/styles/Home.module.css'
 import Header from '@/components/Header'
@@ -62,31 +62,35 @@ export default function Home() {
     if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
       .then(response => {
         return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
-      }).then(data => {
+      })
+      .then(data => {
         if (!data.success) throw new Error(data.error.info ?? data.error.message)
         setRates(data)
+      })
+      .catch(e => {
+        console.log(e)
       })
     return () => { ignore = true }
   }, []);
 
+  // INFO: This is a stopgap to enable project to build
+  if (!rates) {
+    return <p> Loading... </p>
+  }
+
   return (
-    (rates) ?
-      <div className={styles.pageContainer}>
-        <div className={styles.header}> <Header /> </div>
-        <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
-        <div className={styles.dropdownContainer}>
-          <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
-          <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-          <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
-        </div>
-        <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
-        <div className={styles.flex__footer}>
-          <Footer />
-        </div>
+    <div className={styles.pageContainer}>
+      <div className={styles.header}> <Header /> </div>
+      <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
+      <div className={styles.dropdownContainer}>
+        <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
+        <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+        <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
       </div>
-      :
-      <div>
-        <FontAwesomeIcon icon={faSpinner} className={styles.loading} spin size='6x' />
+      <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
+      <div className={styles.flex__footer}>
+        <Footer />
       </div>
+    </div>
   )
 }
