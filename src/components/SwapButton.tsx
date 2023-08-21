@@ -16,8 +16,7 @@ const SwapButton: React.FC<SwapButtonProps> = ({ handleSwap }) => {
   }
   return (
     <div className={styles.container}>
-      <button type="button" onClick={() => {handleSwap(); animate()}}
-        className={`${styles.swapButton} ${(rotate) ? styles.button : ""}`}>
+      <button type="button" onClick={() => {handleSwap(); animate()}} className={`${styles.swapButton} ${(rotate) ? styles.button : ""}`}>
         <FontAwesomeIcon icon={faArrowsRotate} size="3x" />
       </button>
     </div>
