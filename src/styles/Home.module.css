@@ -27,6 +27,7 @@
 .arrow {
   align-self: center;
   margin-left: 10px;
+  color: #007bff;
   margin-right: 10px;
 }
 
@@ -63,6 +64,11 @@
   justify-content: center;
   margin: 0 auto;
   margin-bottom: 20px;
+  border: 2px rgb(220,220,220) solid;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
 }
 
 .flex__footer {

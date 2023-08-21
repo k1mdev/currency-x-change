@@ -5,7 +5,8 @@
 
 .header * {
     font-size: 40px;
-    color: white;
+    color: black;
+    font-weight: bold;
     text-align: center;
 }
 
