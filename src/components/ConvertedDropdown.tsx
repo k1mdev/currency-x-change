@@ -19,7 +19,7 @@ interface ConvertedDropdownProps {
   curB: string;
   amntA: number;
   handleChangeCurB: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  handleChangeAmntB: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleChangeAmntB: (event: React.ChangeEvent<HTMLInputElement>) => void;
   amntBSetter: (amntB: number) => void;
   rates?: Pick<APIHistoricalResponse, 'rates'>;
   enabled: boolean;
@@ -58,7 +58,7 @@ const ConvertedDropdown: React.FC<ConvertedDropdownProps> = ({ currencies, curA,
           })}
           </select>
           { /* TODO: Refactor out the textarea for another attribute */}
-          <textarea id="amountInput" className={`${styles.output} ${montserrat.className}`} onChange={handleChangeAmntB} disabled={!enabled} placeholder="0.00" value={(amntA) ? (rateB * amntA).toFixed(2) : 0.00.toFixed(2)}></textarea>
+          <input id="amountInput" className={`${styles.output} ${montserrat.className}`} onChange={handleChangeAmntB} disabled={!enabled} placeholder="0.00" value={(amntA) ? (rateB * amntA).toFixed(2) : 0.00.toFixed(2)}></input>
       </div>
   )
 }
