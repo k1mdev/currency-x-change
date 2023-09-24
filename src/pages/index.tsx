@@ -68,7 +68,7 @@ export default function Home() {
         setRates(data)
       })
       .catch(e => {
-        console.log(e)
+        console.log(e) // TODO: Error Boundary?
       })
     return () => { ignore = true }
   }, []);
@@ -76,23 +76,23 @@ export default function Home() {
   // INFO: This is a stopgap to enable project to build
   if (!rates) {
     return <p> Loading... </p>
-  }
-
-  return (
-    <div className={styles.pageContainer}>
-      <div className={styles.header}> <Header /> </div>
-      <div className={styles.mainContainer}>
-        <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
-        <div className={styles.dropdownContainer}>
-          <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
-          <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-          <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
+  } else {
+    return (
+      <div className={styles.pageContainer}>
+        <div className={styles.header}> <Header /> </div>
+        <div className={styles.mainContainer}>
+          <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
+          <div className={styles.dropdownContainer}>
+            <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
+            <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+            <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
+          </div>
+          <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
         </div>
-        <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
+        <div className={styles.flex__footer}>
+          <Footer />
+        </div>
       </div>
-      <div className={styles.flex__footer}>
-        <Footer />
-      </div>
-    </div>
-  )
+    )
+  }
 }
