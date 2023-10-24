@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense, Component, ReactNode } from 'react'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
@@ -13,13 +13,16 @@ import Footer from '@/components/Footer'
 
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
-function Loading() {
-  return <p> Loading... </p>
+async function fetcher(...args: Parameters<typeof fetch>) {
+  return fetch(...args)
+    .then(response => {
+      return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
+    })
 }
 
 export default function Home() {
 
-  const [rates, setRates] = useState<FetchedRates>();
+  // const [rates, setRates] = useState<FetchedRates>();
 
   let currencies = ["USD", "GBP", "EUR", "JPY", "AUD", "CAD"];
 
@@ -61,40 +64,15 @@ export default function Home() {
   searchParams.set('base', currencies[0])
   searchParams.set('symbols', currencies.join(','))
 
-  async function fetcher(...args: Parameters<typeof fetch>) {
-    return fetch(...args)
-      .then(response => {
-        return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
-      })
-  }
-  const {data, error, isLoading } = useSwr(
+
+  const { data, error, isLoading } = useSwr(
     decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`),
     fetcher
   )
 
-  // NOTE: Maybe I extract this into a Hook?
-  // useEffect(() => {
-  //   let ignore = false
-  //   const datestring = new Date().toISOString().split("T")[0]
-  //   const searchParams = new URLSearchParams()
-  //   searchParams.set('base', currencies[0])
-  //   searchParams.set('symbols', currencies.join(','))
-  //   if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
-  //     .then(response => {
-  //       return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
-  //     })
-  //     .then(data => {
-  //       if (!data.success) throw new Error(data.error.info ?? data.error.message)
-  //       setRates(data)
-  //     })
-  //     .catch(() => setRates(undefined))
-  //   return () => { ignore = true }
-  // }, []);
-
   if (isLoading) return <h1> Loading </h1>
-  if (!data?.success) return <h1>Failed to Load Correct Data</h1>
   if (error) return <h1> An Error Occured While Fetching</h1>
-
+  if (!data?.success) return <h1>Failed to Load Correct Data</h1>
 
   return (
     <div className={styles.pageContainer}>
@@ -106,7 +84,7 @@ export default function Home() {
         <div className={styles.dropdownContainer}>
           <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
           <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-          <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
+          <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={data} enabled={false} />
         </div>
         <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
       </div>
@@ -115,25 +93,4 @@ export default function Home() {
       </div>
     </div>
   )
-  // if (!rates) {
-  //   return <p> Loading... </p>
-  // } else {
-  //   return (
-  //     <div className={styles.pageContainer}>
-  //       <div className={styles.header}> <Header /> </div>
-  //       <div className={styles.mainContainer}>
-  //         <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
-  //         <div className={styles.dropdownContainer}>
-  //           <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
-  //           <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-  //           <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
-  //         </div>
-  //         <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
-  //       </div>
-  //       <div className={styles.flex__footer}>
-  //         <Footer />
-  //       </div>
-  //     </div>
-  //   )
-  // }
 }
