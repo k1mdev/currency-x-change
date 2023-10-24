@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, Component, ReactNode } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons'
 import { APIErrorResponse, APIHistoricalResponse } from '../responses'
+import useSwr from 'swr'
 import styles from '@/styles/Home.module.css'
 import Header from '@/components/Header'
 import Equivalence from '@/components/Equivalence'
@@ -12,6 +13,9 @@ import Footer from '@/components/Footer'
 
 type FetchedRates = Pick<APIHistoricalResponse, 'rates'>
 
+function Loading() {
+  return <p> Loading... </p>
+}
 
 export default function Home() {
 
@@ -52,47 +56,84 @@ export default function Home() {
     setCurB(tempCur);
   }
 
-  // NOTE: Maybe I extract this into a Hook?
-  useEffect(() => {
-    let ignore = false
-    const datestring = new Date().toISOString().split("T")[0]
-    const searchParams = new URLSearchParams()
-    searchParams.set('base', currencies[0])
-    searchParams.set('symbols', currencies.join(','))
-    if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
+  const datestring = new Date().toISOString().split("T")[0]
+  const searchParams = new URLSearchParams()
+  searchParams.set('base', currencies[0])
+  searchParams.set('symbols', currencies.join(','))
+
+  async function fetcher(...args: Parameters<typeof fetch>) {
+    return fetch(...args)
       .then(response => {
         return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
       })
-      .then(data => {
-        if (!data.success) throw new Error(data.error.info ?? data.error.message)
-        setRates(data)
-      })
-      .catch(e => {
-        console.log(e) // TODO: Error Boundary?
-      })
-    return () => { ignore = true }
-  }, []);
-
-  // INFO: This is a stopgap to enable project to build
-  if (!rates) {
-    return <p> Loading... </p>
-  } else {
-    return (
-      <div className={styles.pageContainer}>
-        <div className={styles.header}> <Header /> </div>
-        <div className={styles.mainContainer}>
-          <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
-          <div className={styles.dropdownContainer}>
-            <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
-            <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
-            <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
-          </div>
-          <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
-        </div>
-        <div className={styles.flex__footer}>
-          <Footer />
-        </div>
-      </div>
-    )
   }
+  const {data, error, isLoading } = useSwr(
+    decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`),
+    fetcher
+  )
+
+  // NOTE: Maybe I extract this into a Hook?
+  // useEffect(() => {
+  //   let ignore = false
+  //   const datestring = new Date().toISOString().split("T")[0]
+  //   const searchParams = new URLSearchParams()
+  //   searchParams.set('base', currencies[0])
+  //   searchParams.set('symbols', currencies.join(','))
+  //   if (!ignore) fetch(decodeURIComponent(`/api/${datestring}?${searchParams.toString()}`))
+  //     .then(response => {
+  //       return response.json() as Promise<APIErrorResponse | APIHistoricalResponse>
+  //     })
+  //     .then(data => {
+  //       if (!data.success) throw new Error(data.error.info ?? data.error.message)
+  //       setRates(data)
+  //     })
+  //     .catch(() => setRates(undefined))
+  //   return () => { ignore = true }
+  // }, []);
+
+  if (isLoading) return <h1> Loading </h1>
+  if (!data?.success) return <h1>Failed to Load Correct Data</h1>
+  if (error) return <h1> An Error Occured While Fetching</h1>
+
+
+  return (
+    <div className={styles.pageContainer}>
+      <div className={styles.header}> <Header /> </div>
+      <div className={styles.mainContainer}>
+        <div className={styles.equivalence}>
+          <Equivalence curA={curA} curB={curB} rateA={data.rates[curA]} rateB={data.rates[curB]} />
+        </div>
+        <div className={styles.dropdownContainer}>
+          <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
+          <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+          <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
+        </div>
+        <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
+      </div>
+      <div className={styles.flex__footer}>
+        <Footer />
+      </div>
+    </div>
+  )
+  // if (!rates) {
+  //   return <p> Loading... </p>
+  // } else {
+  //   return (
+  //     <div className={styles.pageContainer}>
+  //       <div className={styles.header}> <Header /> </div>
+  //       <div className={styles.mainContainer}>
+  //         <div className={styles.equivalence}> <Equivalence curA={curA} curB={curB} rateA={rates?.rates[curA]} rateB={rates?.rates[curB]} /> </div>
+  //         <div className={styles.dropdownContainer}>
+  //           <Dropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurA={handleChangeCurA} handleChangeAmntA={handleChangeAmntA} enabled={true} />
+  //           <FontAwesomeIcon icon={faArrowRightLong} className={styles.arrow} size="6x" />
+  //           <ConvertedDropdown currencies={currencies} curA={curA} curB={curB} amntA={amntA} handleChangeCurB={handleChangeCurB} handleChangeAmntB={handleChangeAmntB} amntBSetter={amntBSetter} rates={rates} enabled={false} />
+  //         </div>
+  //         <div className={styles.swapButton}> <SwapButton handleSwap={handleSwap} /> </div>
+  //       </div>
+  //       <div className={styles.flex__footer}>
+  //         <Footer />
+  //       </div>
+  //     </div>
+  //   )
+  // }
 }
