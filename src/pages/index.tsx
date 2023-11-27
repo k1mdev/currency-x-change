@@ -71,8 +71,8 @@ export default function Home() {
   )
 
   if (isLoading) return <h1> Loading </h1>
-  if (error) return <h1> An Error Occured While Fetching</h1>
-  if (!data?.success) return <h1>Failed to Load Correct Data</h1>
+  if (error) return <h1>Please refresh page</h1>
+  if (!data?.success) return <h1>Please refresh page</h1>
 
   return (
     <div className={styles.pageContainer}>
